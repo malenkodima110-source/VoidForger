@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0a0f">
+  <meta name="description" content="MLBB Helper — удобный помощник для Mobile Legends: Bang Bang. Контр-пики, гайды и инструменты. Устанавливается на телефон как приложение.">
+  <title>MLBB Helper — Помощник для Mobile Legends</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --card: #12121a;
+      --accent: #8b5cf6;
+      --accent-hover: #7c3aed;
+      --text: #f5f3ff;
+      --muted: #a78bfa;
+      --success: #22c55e;
+      --border: #2e1065;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 24px 20px 60px;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 0 32px;
+    }
+
+    .logo-img {
+      width: 80px;
+      height: auto;
+      margin-bottom: 12px;
+      filter: drop-shadow(0 0 12px rgba(139, 92, 246, 0.6));
+    }
+
+    .logo {
+      font-size: 2.4rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #a78bfa, #7c3aed, #4c1d95);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+    }
+
+    .tagline {
+      color: var(--muted);
+      font-size: 1.1rem;
+    }
+
+    .lang-switch {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin: 20px 0 32px;
+    }
+
+    .lang-btn {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+    }
+
+    .lang-btn.active {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    .lang-btn:hover:not(.active) {
+      border-color: var(--accent);
+      color: var(--text);
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 24px;
+      margin-bottom: 20px;
+    }
+
+    .card h2 {
+      font-size: 1.35rem;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card p, .card li {
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .card ul {
+      padding-left: 20px;
+      margin: 12px 0;
+    }
+
+    .card li {
+      margin-bottom: 8px;
+    }
+
+    .highlight {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .cta {
+      display: block;
+      width: 100%;
+      background: linear-gradient(135deg, #7c3aed, #4c1d95);
+      color: white;
+      text-align: center;
+      padding: 16px 24px;
+      border-radius: 12px;
+      font-size: 1.15rem;
+      font-weight: 600;
+      text-decoration: none;
+      margin: 28px 0 16px;
+      transition: transform 0.15s, box-shadow 0.15s;
+      border: none;
+      cursor: pointer;
+    }
+
+    .cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(124, 58, 237, 0.45);
+    }
+
+    .cta:active {
+      transform: translateY(0);
+    }
+
+    .steps {
+      counter-reset: step;
+    }
+
+    .step {
+      position: relative;
+      padding-left: 48px;
+      margin-bottom: 22px;
+    }
+
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 32px;
+      height: 32px;
+      background: var(--accent);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .step strong {
+      display: block;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .note {
+      background: rgba(139, 92, 246, 0.12);
+      border-left: 4px solid var(--accent);
+      padding: 14px 16px;
+      border-radius: 0 8px 8px 0;
+      margin-top: 16px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    footer {
+      text-align: center;
+      padding: 32px 0 16px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 480px) {
+      .logo { font-size: 2rem; }
+      .card { padding: 22px 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="icons/logo.svg" alt="MLBB Helper Logo" class="logo-img">
+      <div class="logo">MLBB Helper</div>
+      <p class="tagline" data-i18n="tagline">Удобный помощник для Mobile Legends</p>
+    </header>
+
+    <div class="lang-switch">
+      <button class="lang-btn active" data-lang="ru">Русский</button>
+      <button class="lang-btn" data-lang="en">English</button>
+    </div>
+
+    <!-- RU Content -->
+    <div id="content-ru">
+      <div class="card">
+        <h2>📱 Для чего это приложение</h2>
+        <p>MLBB Helper — это лёгкий помощник для игры <span class="highlight">Mobile Legends: Bang Bang</span>.</p>
+        <p>Главная цель — помочь быстро принимать правильные решения в драфте и во время игры.</p>
+        <ul>
+          <li><strong>Контр-пики</strong> — выбираешь героя противника и сразу видишь лучших контров</li>
+          <li>Удобный поиск по героям</li>
+          <li>Работает на телефоне как настоящее приложение</li>
+          <li>Можно пользоваться даже без интернета (после первой загрузки)</li>
+          <li>Полностью на русском и английском</li>
+        </ul>
+        <p class="note">Приложение не является официальным продуктом Moonton и не связано с компанией. Данные носят ознакомительный характер.</p>
+      </div>
+
+      <a href="app/" class="cta">Открыть приложение →</a>
+
+      <div class="card">
+        <h2>📲 Как установить на телефон</h2>
+        <p>Приложение сделано как <strong>PWA</strong> (Progressive Web App). Его можно установить на домашний экран — оно будет выглядеть и работать как обычное приложение из магазина.</p>
+
+        <h3 style="margin: 20px 0 14px; font-size: 1.1rem;">Android (Chrome / Edge / Samsung Internet)</h3>
+        <div class="steps">
+          <div class="step">
+            <strong>Открой эту страницу в браузере</strong>
+            Лучше всего использовать Google Chrome.
+          </div>
+          <div class="step">
+            <strong>Нажми на меню браузера</strong>
+            Три точки в правом верхнем углу.
+          </div>
+          <div class="step">
+            <strong>Выбери «Установить приложение» или «Добавить на главный экран»</strong>
+            Иногда пункт называется «Install app» или «Add to Home screen».
+          </div>
+          <div class="step">
+            <strong>Подтверди установку</strong>
+            Иконка появится на рабочем столе. Запускай как обычное приложение.
+          </div>
+        </div>
+
+        <h3 style="margin: 28px 0 14px; font-size: 1.1rem;">iPhone / iPad (Safari)</h3>
+        <div class="steps">
+          <div class="step">
+            <strong>Открой сайт в Safari</strong>
+            Другие браузеры на iOS не поддерживают полноценную установку PWA.
+          </div>
+          <div class="step">
+            <strong>Нажми кнопку «Поделиться»</strong>
+            Квадрат со стрелкой вверх внизу экрана.
+          </div>
+          <div class="step">
+            <strong>Пролистай и выбери «На экран "Домой"»</strong>
+            (Add to Home Screen)
+          </div>
+          <div class="step">
+            <strong>Нажми «Добавить»</strong>
+            Готово! Иконка появится на рабочем столе.
+          </div>
+        </div>
+
+        <p class="note">После установки приложение можно запускать без браузера. Оно откроется в полноэкранном режиме.</p>
+      </div>
+
+      <div class="card">
+        <h2>✨ Что будет дальше</h2>
+        <p>Сейчас в приложении основной инструмент — <strong>контр-пики</strong>.</p>
+        <p>В следующих обновлениях планируется добавить:</p>
+        <ul>
+          <li>Калькулятор билдов и эмблем</li>
+          <li>Тир-лист с фильтрами</li>
+          <li>Быстрые гайды по героям</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- EN Content -->
+    <div id="content-en" class="hidden">
+      <div class="card">
+        <h2>📱 What is this app for</h2>
+        <p>MLBB Helper is a lightweight assistant for <span class="highlight">Mobile Legends: Bang Bang</span>.</p>
+        <p>Its main goal is to help you make better decisions during draft and in-game.</p>
+        <ul>
+          <li><strong>Counter picks</strong> — select an enemy hero and instantly see the best counters</li>
+          <li>Convenient hero search</li>
+          <li>Works on your phone like a real app</li>
+          <li>Works offline after the first load</li>
+          <li>Fully available in Russian and English</li>
+        </ul>
+        <p class="note">This is not an official Moonton product and is not affiliated with the company. Data is for informational purposes only.</p>
+      </div>
+
+      <a href="app/" class="cta">Open the App →</a>
+
+      <div class="card">
+        <h2>📲 How to install on your phone</h2>
+        <p>The app is built as a <strong>PWA</strong> (Progressive Web App). You can install it on your home screen — it will look and work like a regular app from the store.</p>
+
+        <h3 style="margin: 20px 0 14px; font-size: 1.1rem;">Android (Chrome / Edge / Samsung Internet)</h3>
+        <div class="steps">
+          <div class="step">
+            <strong>Open this page in your browser</strong>
+            Google Chrome works best.
+          </div>
+          <div class="step">
+            <strong>Tap the browser menu</strong>
+            Three dots in the top-right corner.
+          </div>
+          <div class="step">
+            <strong>Select “Install app” or “Add to Home screen”</strong>
+            The exact wording may vary slightly.
+          </div>
+          <div class="step">
+            <strong>Confirm installation</strong>
+            The icon will appear on your home screen. Launch it like any other app.
+          </div>
+        </div>
+
+        <h3 style="margin: 28px 0 14px; font-size: 1.1rem;">iPhone / iPad (Safari)</h3>
+        <div class="steps">
+          <div class="step">
+            <strong>Open the site in Safari</strong>
+            Other browsers on iOS do not fully support PWA installation.
+          </div>
+          <div class="step">
+            <strong>Tap the Share button</strong>
+            The square with an upward arrow at the bottom of the screen.
+          </div>
+          <div class="step">
+            <strong>Scroll and select “Add to Home Screen”</strong>
+          </div>
+          <div class="step">
+            <strong>Tap “Add”</strong>
+            Done! The icon will appear on your home screen.
+          </div>
+        </div>
+
+        <p class="note">After installation the app can be launched without the browser. It opens in full-screen mode.</p>
+      </div>
+
+      <div class="card">
+        <h2>✨ What’s next</h2>
+        <p>Right now the main tool is <strong>counter picks</strong>.</p>
+        <p>In future updates we plan to add:</p>
+        <ul>
+          <li>Build & emblem calculator</li>
+          <li>Tier list with filters</li>
+          <li>Quick hero guides</li>
+        </ul>
+      </div>
+    </div>
+
+    <footer>
+      <p>MLBB Helper · Неофициальный фанатский проект</p>
+      <p style="margin-top: 6px; font-size: 0.85rem;">Mobile Legends: Bang Bang is a trademark of Moonton</p>
+    </footer>
+  </div>
+
+  <script>
+    const langBtns = document.querySelectorAll('.lang-btn');
+    const contentRu = document.getElementById('content-ru');
+    const contentEn = document.getElementById('content-en');
+
+    function setLang(lang) {
+      langBtns.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+      });
+      if (lang === 'ru') {
+        contentRu.classList.remove('hidden');
+        contentEn.classList.add('hidden');
+        document.documentElement.lang = 'ru';
+      } else {
+        contentRu.classList.add('hidden');
+        contentEn.classList.remove('hidden');
+        document.documentElement.lang = 'en';
+      }
+      localStorage.setItem('mlbb-lang', lang);
+    }
+
+    langBtns.forEach(btn => {
+      btn.addEventListener('click', () => setLang(btn.dataset.lang));
+    });
+
+    // Restore saved language
+    const saved = localStorage.getItem('mlbb-lang') || 'ru';
+    setLang(saved);
+  </script>
+</body>
+</html>
